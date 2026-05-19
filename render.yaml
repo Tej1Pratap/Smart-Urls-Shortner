@@ -1,0 +1,41 @@
+services:
+  # 1. Backend Web Service (Spring Boot)
+  - type: web
+    name: smart-url-backend
+    env: docker
+    dockerContext: backend
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: smart-url-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: smart-url-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: smart-url-db
+          property: password
+      - key: SMARTURL_BASE_URL
+        sync: false 
+      - key: SMARTURL_APP_JWTSECRET
+        generateValue: true
+
+  # 2. Frontend Static Site (React)
+  - type: web
+    name: smart-url-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false 
+
+databases:
+  # 3. PostgreSQL Database (FREE on Render)
+  - name: smart-url-db
+    databaseName: smart_url_db
+    user: smart_user # 'postgres' is reserved, use 'smart_user'
+    plan: free

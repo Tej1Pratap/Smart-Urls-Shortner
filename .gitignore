@@ -1,0 +1,20 @@
+# Java
+backend/target/
+backend/*.jar
+backend/*.war
+backend/*.ear
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

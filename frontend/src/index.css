@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0c4a6e;
+  --color-primary-950: #082f49;
+}
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  @apply bg-slate-950 text-slate-200 antialiased;
+}
+
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@utility glass-card {
+  @apply glass rounded-2xl shadow-xl transition-all duration-300;
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@utility btn-primary {
+  @apply bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 transform;
+  &:hover {
+    @apply bg-primary-500 scale-[1.02];
+  }
+  &:active {
+    @apply scale-[0.98];
+  }
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+}
+
+@utility input-field {
+  @apply w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-2 text-slate-100 transition-all duration-300;
+  &:focus {
+    @apply outline-none ring-2 ring-primary-500/50 border-primary-500;
+  }
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-700 rounded-full hover:bg-slate-600 transition-colors;
+}
