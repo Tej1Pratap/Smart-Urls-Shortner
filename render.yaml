@@ -6,10 +6,18 @@ services:
     dockerContext: backend
     dockerfilePath: Dockerfile
     envVars:
-      - key: DATABASE_URL
+      - key: DB_HOST
         fromDatabase:
           name: smart-url-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: smart-url-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: smart-url-db
+          property: database
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: smart-url-db
