@@ -1,6 +1,7 @@
 package com.smarturl.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,9 @@ import java.util.Collections;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
+    @Value("${smarturl.frontend-url}")
+    private String frontendUrl;
+
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -78,7 +82,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173")); // Vite default
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", frontendUrl)); // Vite default and production URL
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
         configuration.setAllowCredentials(true);

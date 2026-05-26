@@ -1,15 +1,16 @@
 services:
   db:
-    image: mysql:8.0
+    image: postgres:15-alpine
     container_name: smart-url-db
     restart: always
     environment:
-      MYSQL_DATABASE: smart_url_db
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: smart_url_db
+      POSTGRES_USER: smart_user
+      POSTGRES_PASSWORD: postgrespassword
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: ./backend
@@ -18,9 +19,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/smart_url_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/smart_url_db
+      SPRING_DATASOURCE_USERNAME: smart_user
+      SPRING_DATASOURCE_PASSWORD: postgrespassword
       SMARTURL_BASE_URL: http://localhost:8080
     depends_on:
       - db
@@ -35,4 +36,4 @@ services:
       - backend
 
 volumes:
-  mysql_data:
+  postgres_data:
